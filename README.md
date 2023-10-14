@@ -21,7 +21,7 @@ It's developed for the 2D Game Engine project [Raindrop](https://github.com/up1-
 2. **Usage**: Import the package in your code and start using it:
 
 ```go
-   import "github.com/up1-io/asset"
+   import "github.com/up1-io/asset-loader"
 ```
 
 3. **Examples**:
