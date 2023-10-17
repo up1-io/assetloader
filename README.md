@@ -17,7 +17,7 @@ This library uses the following packages:
 - [Pixel](https://github.com/gopxl/pixel) for defining image types
 - [Beep](https://github.com/gopxl/beep) for defining sound types
 
->Note: We relay on the [Pixel](github.com/gopxl/pixel) and [Beep](github.com/gopxl/beep) packages to define the asset data types. Currently no support for swapping the backend.
+>Note: We relay on the [Pixel](https://github.com/gopxl/pixel) and [Beep](https://github.com/gopxl/beep) packages to define the asset data types. Currently no support for swapping the backend.
 
 ## Getting Started
 
