@@ -10,6 +10,15 @@ A simple asset loader in Go. It can be used to load any type of assets, such as 
 
 It's developed for the 2D Game Engine project [Raindrop](https://github.com/up1-io/raindrop).
 
+## Features
+
+This library uses the following packages:
+
+- [Pixel](github.com/gopxl/pixel) for defining image types
+- [Beep](github.com/gopxl/beep) for defining sound types
+
+>Note: We relay on the [Pixel](github.com/gopxl/pixel) and [Beep](github.com/gopxl/beep) packages to define the asset data types. Currently no support for swapping the backend.
+
 ## Getting Started
 
 1. **Installation**: Get the package using `go get`:

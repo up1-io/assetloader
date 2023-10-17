@@ -1,6 +1,8 @@
 package asset_loader
 
 import (
+	"github.com/gopxl/beep"
+	"github.com/gopxl/beep/mp3"
 	"github.com/gopxl/pixel"
 	"image"
 	_ "image/png"
@@ -14,6 +16,8 @@ type AssetLoader struct {
 // IAssetLoader is an interface that defines the methods that an asset loader must implement.
 type IAssetLoader interface {
 	LoadTexture(name string, path string) (AssetResource, error)
+	LoadAudio(name string, path string) (AssetResource, error)
+	LoadAudioStream(name string, path string) (AssetResource, error)
 	Get(name string) interface{}
 	Remove(name string)
 	Clear()
@@ -44,6 +48,55 @@ func (al AssetLoader) LoadTexture(name string, path string) (AssetResource, erro
 		Name: name,
 		Path: path,
 		Data: pic,
+	}
+
+	al.load(name, asset)
+
+	return asset, nil
+}
+
+// LoadAudio loads an audio asset into the asset loader.
+func (al AssetLoader) LoadAudio(name string, path string) (AssetResource, error) {
+	buffer, format, err := al.loadAudioBuffer(path)
+	if err != nil {
+		return AssetResource{}, err
+	}
+
+	audio := AudioAsset{
+		Buffer: buffer,
+		Format: format,
+	}
+
+	asset := AssetResource{
+		Type: Mp3AudioAssetType,
+		Name: name,
+		Path: path,
+		Data: audio,
+	}
+
+	al.load(name, asset)
+
+	return asset, nil
+}
+
+// LoadAudioStream loads an audio stream asset into the asset loader.
+func (al AssetLoader) LoadAudioStream(name, path string) (AssetResource, error) {
+	streamer, format, err := al.loadAudioStream(path)
+	if err != nil {
+		return AssetResource{}, err
+	}
+
+	audio := AudioStreamAsset{
+		Stream: streamer,
+		Format: format,
+	}
+
+	asset := AssetResource{
+		Type:    Mp3AudioStreamAssetType,
+		Name:    name,
+		Path:    path,
+		Data:    audio,
+		IsDirty: false,
 	}
 
 	al.load(name, asset)
@@ -110,6 +163,41 @@ func (al *AssetLoader) Each(fn func(name string, asset AssetResource)) {
 	for name, asset := range al.assets {
 		fn(name, asset)
 	}
+}
+
+func (al AssetLoader) loadAudioBuffer(path string) (*beep.Buffer, beep.Format, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, beep.Format{}, err
+	}
+
+	streamer, format, err := mp3.Decode(file)
+	if err != nil {
+		return nil, beep.Format{}, err
+	}
+
+	buffer := beep.NewBuffer(format)
+	buffer.Append(streamer)
+	err = streamer.Close()
+	if err != nil {
+		return nil, beep.Format{}, err
+	}
+
+	return buffer, format, nil
+}
+
+func (al AssetLoader) loadAudioStream(path string) (beep.StreamSeekCloser, beep.Format, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, beep.Format{}, err
+	}
+
+	streamer, format, err := mp3.Decode(file)
+	if err != nil {
+		return nil, beep.Format{}, err
+	}
+
+	return streamer, format, nil
 }
 
 func (al AssetLoader) loadPicture(path string) (pixel.Picture, error) {

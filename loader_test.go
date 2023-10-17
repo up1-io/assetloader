@@ -1,6 +1,8 @@
 package asset_loader
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestAssetLoader_LoadTexture(t *testing.T) {
 	loader := NewAssetLoader()
@@ -153,5 +155,67 @@ func TestAssetLoader_LoadTexture_Error(t *testing.T) {
 
 	if err == nil {
 		t.Errorf("Expected error, got nil")
+	}
+}
+
+func TestAssetLoader_LoadAudio(t *testing.T) {
+	loader := NewAssetLoader()
+
+	asset, err := loader.LoadAudio("test", "test/audio.mp3")
+
+	if err != nil {
+		t.Errorf("Expected no error, got %s", err.Error())
+	}
+
+	if asset.Type != Mp3AudioAssetType {
+		t.Errorf("Expected %s, got %s", Mp3AudioAssetType, asset.Type)
+	}
+
+	if asset.Name != "test" {
+		t.Errorf("Expected %s, got %s", "test", asset.Name)
+	}
+
+	if asset.Path != "test/audio.mp3" {
+		t.Errorf("Expected %s, got %s", "test/test-audio.mp3", asset.Path)
+	}
+
+	if asset.Data == nil {
+		t.Errorf("Expected not nil, got nil")
+	}
+}
+
+func TestAssetLoader_LoadAudio_Error(t *testing.T) {
+	loader := NewAssetLoader()
+
+	_, err := loader.LoadAudio("test", "test/notExist.mp3")
+
+	if err == nil {
+		t.Errorf("Expected error, got nil")
+	}
+}
+
+func TestAssetLoader_LoadAudioStream(t *testing.T) {
+	loader := NewAssetLoader()
+
+	asset, err := loader.LoadAudioStream("test", "test/audio.mp3")
+
+	if err != nil {
+		t.Errorf("Expected no error, got %s", err.Error())
+	}
+
+	if asset.Type != Mp3AudioStreamAssetType {
+		t.Errorf("Expected %s, got %s", Mp3AudioStreamAssetType, asset.Type)
+	}
+
+	if asset.Name != "test" {
+		t.Errorf("Expected %s, got %s", "test", asset.Name)
+	}
+
+	if asset.Path != "test/audio.mp3" {
+		t.Errorf("Expected %s, got %s", "test/test-audio.mp3", asset.Path)
+	}
+
+	if asset.Data == nil {
+		t.Errorf("Expected not nil, got nil")
 	}
 }
