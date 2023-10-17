@@ -14,8 +14,8 @@ It's developed for the 2D Game Engine project [Raindrop](https://github.com/up1-
 
 This library uses the following packages:
 
-- [Pixel](github.com/gopxl/pixel) for defining image types
-- [Beep](github.com/gopxl/beep) for defining sound types
+- [Pixel](https://github.com/gopxl/pixel) for defining image types
+- [Beep](https://github.com/gopxl/beep) for defining sound types
 
 >Note: We relay on the [Pixel](github.com/gopxl/pixel) and [Beep](github.com/gopxl/beep) packages to define the asset data types. Currently no support for swapping the backend.
 
