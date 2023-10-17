@@ -3,6 +3,7 @@
 
 ![Version](https://img.shields.io/badge/Version-Prototype-red)
 [![GoDoc](https://godoc.org/github.com/up1-io/ecs?status.svg)](https://godoc.org/github.com/up1-io/asset-loader)
+[![Go](https://github.com/up1-io/asset-loader/actions/workflows/go.yml/badge.svg)](https://github.com/up1-io/asset-loader/actions/workflows/go.yml)
 
 > Note: This library is currently in prototype stage. It is not recommended to use this library in production.
 
