@@ -109,7 +109,7 @@ func (al Loader) LoadAudioStream(name, path string) (AssetResource, error) {
 }
 
 // LoadTTF loads a TTF asset into the asset loader.
-func (al *Loader) LoadTTF(name, path string, size float64) (AssetResource, error) {
+func (al Loader) LoadTTF(name, path string, size float64) (AssetResource, error) {
 	f, err := al.loadFontFace(path, size)
 	if err != nil {
 		return AssetResource{}, err
