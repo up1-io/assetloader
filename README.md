@@ -40,7 +40,7 @@ This library uses the following packages:
 package main
 
 func main() {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 	asset, err := loader.LoadTexture("test", "test/test-image.png")
 	if err != nil {
 		panic(err)

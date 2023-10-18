@@ -5,7 +5,7 @@ import (
 )
 
 func TestAssetLoader_LoadTexture(t *testing.T) {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 
 	asset, err := loader.LoadTexture("test", "test/test-image.png")
 
@@ -31,7 +31,7 @@ func TestAssetLoader_LoadTexture(t *testing.T) {
 }
 
 func TestAssetLoader_Get(t *testing.T) {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 
 	_, err := loader.LoadTexture("test", "test/test-image.png")
 
@@ -47,7 +47,7 @@ func TestAssetLoader_Get(t *testing.T) {
 }
 
 func TestAssetLoader_Remove(t *testing.T) {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 
 	_, err := loader.LoadTexture("test", "test/test-image.png")
 
@@ -67,7 +67,7 @@ func TestAssetLoader_Remove(t *testing.T) {
 }
 
 func TestAssetLoader_Clear(t *testing.T) {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 
 	_, err := loader.LoadTexture("test1", "test/test-image.png")
 
@@ -88,7 +88,7 @@ func TestAssetLoader_Clear(t *testing.T) {
 }
 
 func TestAssetLoader_Count(t *testing.T) {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 
 	_, err := loader.LoadTexture("test1", "test/test-image.png")
 
@@ -107,7 +107,7 @@ func TestAssetLoader_Count(t *testing.T) {
 }
 
 func TestAssetLoader_List(t *testing.T) {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 
 	_, err := loader.LoadTexture("test1", "test/test-image.png")
 
@@ -128,7 +128,7 @@ func TestAssetLoader_List(t *testing.T) {
 }
 
 func TestAssetLoader_Each(t *testing.T) {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 
 	_, err := loader.LoadTexture("test1", "test/test-image.png")
 
@@ -149,7 +149,7 @@ func TestAssetLoader_Each(t *testing.T) {
 }
 
 func TestAssetLoader_LoadTexture_Error(t *testing.T) {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 
 	_, err := loader.LoadTexture("test", "test/notExist.png")
 
@@ -159,7 +159,7 @@ func TestAssetLoader_LoadTexture_Error(t *testing.T) {
 }
 
 func TestAssetLoader_LoadAudio(t *testing.T) {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 
 	asset, err := loader.LoadAudio("test", "test/audio.mp3")
 
@@ -185,7 +185,7 @@ func TestAssetLoader_LoadAudio(t *testing.T) {
 }
 
 func TestAssetLoader_LoadAudio_Error(t *testing.T) {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 
 	_, err := loader.LoadAudio("test", "test/notExist.mp3")
 
@@ -195,7 +195,7 @@ func TestAssetLoader_LoadAudio_Error(t *testing.T) {
 }
 
 func TestAssetLoader_LoadAudioStream(t *testing.T) {
-	loader := NewAssetLoader()
+	loader := NewLoader()
 
 	asset, err := loader.LoadAudioStream("test", "test/audio.mp3")
 

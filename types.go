@@ -6,10 +6,10 @@ import "github.com/gopxl/beep"
 type AssetType string
 
 const (
-	// PngImageAssetType is the type of a PNG image asset.
 	PngImageAssetType       AssetType = "image/png"
 	Mp3AudioAssetType       AssetType = "audio/mp3"
 	Mp3AudioStreamAssetType AssetType = "audio/mp3-stream"
+	TFFAssetType            AssetType = "font/ttf"
 )
 
 // AudioAsset is a type that defines an audio asset. It holds the audio buffer and format.
