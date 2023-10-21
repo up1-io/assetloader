@@ -11,7 +11,7 @@ import (
 
 // TextureAsset is a type that defines a texture asset. It holds the picture.
 type TextureAsset struct {
-	Picture *pixel.Picture
+	Picture pixel.Picture
 }
 
 type TextureLoader struct {
@@ -55,7 +55,7 @@ func (tl *TextureLoader) LoadTexture(name string, path string) (AssetResource[Te
 		Name: name,
 		Path: path,
 		Data: TextureAsset{
-			Picture: &pic,
+			Picture: pic,
 		},
 	}
 
