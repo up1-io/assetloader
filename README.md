@@ -1,24 +1,23 @@
 # Asset Loader
 
-
 ![Version](https://img.shields.io/badge/Version-Prototype-red)
 [![GoDoc](https://godoc.org/github.com/up1-io/ecs?status.svg)](https://godoc.org/github.com/up1-io/asset-loader)
 [![Go](https://github.com/up1-io/asset-loader/actions/workflows/go.yml/badge.svg)](https://github.com/up1-io/asset-loader/actions/workflows/go.yml)
 
 > Note: This library is currently in prototype stage. It is not recommended to use this library in production.
 
-A simple asset loader in Go. It can be used to load any type of assets, such as images, sounds, fonts, etc.
+Go Asset Loader is a straightforward asset loading library for the Go programming language. 
+It is built on top of the [Pixel](https://github.com/gopxl/pixel) and [Beep](https://github.com/gopxl/beep) packages. 
 
-It's developed for the 2D Game Engine project [Raindrop](https://github.com/up1-io/raindrop).
+This library has been developed as part of the 2D Game Engine project called [Raindrop](https://github.com/up1-io/raindrop).
 
 ## Features
 
-This library uses the following packages:
+Asset Loader supports the following features:
 
-- [Pixel](https://github.com/gopxl/pixel) for defining image types
-- [Beep](https://github.com/gopxl/beep) for defining sound types
-
->Note: We relay on the [Pixel](https://github.com/gopxl/pixel) and [Beep](https://github.com/gopxl/beep) packages to define the asset data types. Currently no support for swapping the backend.
+- **Textures**: Load textures from PNG and JPEG files.
+- **Sounds**: Load sounds from MP3 files.
+- **Fonts**: Load fonts from TTF files.
 
 ## Getting Started
 
@@ -34,19 +33,19 @@ This library uses the following packages:
    import "github.com/up1-io/asset-loader"
 ```
 
-3. **Examples**:
+3. **Simple Example**:
 
 ```go
 package main
 
 func main() {
-	loader := NewLoader()
+	loader := asset_loader.NewLoader()
+
 	asset, err := loader.LoadTexture("test", "test/test-image.png")
 	if err != nil {
 		panic(err)
 	}
-	
-	// Use the asset
+
 	println(asset.Name, asset.Path, asset.Type)
 }
 ```

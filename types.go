@@ -1,24 +1,28 @@
 package asset_loader
 
-import "github.com/gopxl/beep"
-
-// AssetType is a type that defines the type of an asset.
-type AssetType string
-
 const (
 	PngImageAssetType       AssetType = "image/png"
+	JpegImageAssetType      AssetType = "image/jpeg"
 	Mp3AudioAssetType       AssetType = "audio/mp3"
 	Mp3AudioStreamAssetType AssetType = "audio/mp3-stream"
 	TFFAssetType            AssetType = "font/ttf"
 )
 
-// AudioAsset is a type that defines an audio asset. It holds the audio buffer and format.
-type AudioAsset struct {
-	Buffer *beep.Buffer
-	Format beep.Format
+// AssetType is a type that defines the type of an asset.
+type AssetType string
+
+type AssetData interface {
+	FontAsset | AudioAsset | AudioStreamAsset | TextureAsset
 }
 
-type AudioStreamAsset struct {
-	Stream beep.StreamSeekCloser
-	Format beep.Format
+// AssetResource is a type that defines an asset resource.
+// An asset resource is a resource that is loaded by the asset loader. It holds the data of the asset.
+type AssetResource[T AssetData] struct {
+	Type AssetType
+	Name string
+	Path string
+	Data T
+
+	// IsDirty is a flag that indicates if the asset resource has been modified.
+	IsDirty bool
 }
