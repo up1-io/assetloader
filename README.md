@@ -24,7 +24,7 @@ Asset Loader supports the following features:
 1. **Installation**: Get the package using `go get`:
 
 ```bash
-   go get github.com/up1-io/asset-loader
+   go get github.com/up1-io/assetloader
 ```
 
 2. **Usage**: Import the package in your code and start using it:
@@ -38,8 +38,10 @@ Asset Loader supports the following features:
 ```go
 package main
 
+import "github.com/up1-io/assetloader"
+
 func main() {
-	loader := asset_loader.NewLoader()
+	loader := assetloader.NewLoader()
 
 	asset, err := loader.LoadTexture("test", "test/test-image.png")
 	if err != nil {

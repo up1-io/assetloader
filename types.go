@@ -1,4 +1,7 @@
-package asset_loader
+package assetloader
+
+// AssetType is a type that defines the type of an asset.
+type AssetType string
 
 const (
 	PngImageAssetType       AssetType = "image/png"
@@ -7,9 +10,6 @@ const (
 	Mp3AudioStreamAssetType AssetType = "audio/mp3-stream"
 	TFFAssetType            AssetType = "font/ttf"
 )
-
-// AssetType is a type that defines the type of an asset.
-type AssetType string
 
 type AssetData interface {
 	FontAsset | AudioAsset | AudioStreamAsset | TextureAsset

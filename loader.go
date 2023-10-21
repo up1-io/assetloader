@@ -1,4 +1,4 @@
-package asset_loader
+package assetloader
 
 import (
 	_ "image/png"
