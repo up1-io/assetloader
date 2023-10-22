@@ -22,7 +22,4 @@ type AssetResource[T AssetData] struct {
 	Name string
 	Path string
 	Data T
-
-	// IsDirty is a flag that indicates if the asset resource has been modified.
-	IsDirty bool
 }
