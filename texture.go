@@ -30,11 +30,6 @@ func (tl *TextureLoader) LoadTexture(name string, path string) (AssetResource[Te
 		return AssetResource[TextureAsset]{}, ErrAssetAlreadyExists{name: name}
 	}
 
-	pic, err := tl.loadPicture(path)
-	if err != nil {
-		return AssetResource[TextureAsset]{}, err
-	}
-
 	// Get the file extension.
 	rawType := strings.Split(path, ".")[1]
 
@@ -48,6 +43,11 @@ func (tl *TextureLoader) LoadTexture(name string, path string) (AssetResource[Te
 		assetType = JpegImageAssetType
 	default:
 		return AssetResource[TextureAsset]{}, ErrInvalidFileFormat{rawType: rawType}
+	}
+
+	pic, err := tl.loadPicture(path)
+	if err != nil {
+		return AssetResource[TextureAsset]{}, err
 	}
 
 	asset := AssetResource[TextureAsset]{
