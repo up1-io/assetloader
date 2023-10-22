@@ -3,7 +3,9 @@ package assetloader
 import (
 	"github.com/gopxl/beep"
 	"github.com/gopxl/beep/mp3"
+	"github.com/gopxl/beep/wav"
 	"os"
+	"strings"
 )
 
 type AudioAsset struct {
@@ -30,7 +32,7 @@ func NewAudioLoader() AudioLoader {
 
 // LoadAudioClip loads a audio clip asset into the asset loader.
 func (al *AudioLoader) LoadAudioClip(name, path string) (AssetResource[AudioAsset], error) {
-	buffer, format, err := al.loadAudioBuffer(path)
+	assetType, buffer, format, err := al.loadAudioBuffer(path)
 	if err != nil {
 		return AssetResource[AudioAsset]{}, err
 	}
@@ -41,7 +43,7 @@ func (al *AudioLoader) LoadAudioClip(name, path string) (AssetResource[AudioAsse
 	}
 
 	asset := AssetResource[AudioAsset]{
-		Type: Mp3AudioAssetType,
+		Type: assetType,
 		Name: name,
 		Path: path,
 		Data: data,
@@ -77,7 +79,7 @@ func (al *AudioLoader) EachAudioClip(fn func(name string, asset AssetResource[Au
 
 // LoadAudioStream loads a audio stream asset into the asset loader.
 func (al *AudioLoader) LoadAudioStream(name, path string) (AssetResource[AudioStreamAsset], error) {
-	streamer, format, err := al.loadAudioStream(path)
+	assetType, streamer, format, err := al.loadAudio(path)
 	if err != nil {
 		return AssetResource[AudioStreamAsset]{}, err
 	}
@@ -88,7 +90,7 @@ func (al *AudioLoader) LoadAudioStream(name, path string) (AssetResource[AudioSt
 	}
 
 	asset := AssetResource[AudioStreamAsset]{
-		Type: Mp3AudioStreamAssetType,
+		Type: assetType,
 		Name: name,
 		Path: path,
 		Data: data,
@@ -122,37 +124,55 @@ func (al *AudioLoader) EachAudioStream(fn func(name string, asset AssetResource[
 	}
 }
 
-func (al *AudioLoader) loadAudioBuffer(path string) (*beep.Buffer, beep.Format, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, beep.Format{}, err
-	}
-
-	streamer, format, err := mp3.Decode(file)
-	if err != nil {
-		return nil, beep.Format{}, err
-	}
+func (al *AudioLoader) loadAudioBuffer(path string) (AssetType, *beep.Buffer, beep.Format, error) {
+	assetType, streamer, format, err := al.loadAudio(path)
 
 	buffer := beep.NewBuffer(format)
 	buffer.Append(streamer)
 	err = streamer.Close()
 	if err != nil {
-		return nil, beep.Format{}, err
+		return assetType, nil, beep.Format{}, err
 	}
 
-	return buffer, format, nil
+	return assetType, buffer, format, nil
 }
 
-func (al *AudioLoader) loadAudioStream(path string) (beep.StreamSeekCloser, beep.Format, error) {
+func (al *AudioLoader) loadAudio(path string) (AssetType, beep.StreamSeekCloser, beep.Format, error) {
+	// Get the file extension.
+	rawType := strings.Split(path, ".")[1]
+
+	var assetType AssetType
+	var streamer beep.StreamSeekCloser
+	var format beep.Format
+	var err error
+	switch rawType {
+	case "mp3":
+		assetType = Mp3AudioAssetType
+		streamer, format, err = al.loadMp3Audio(path)
+	case "wav":
+		assetType = Mp3AudioAssetType
+		streamer, format, err = al.loadWavAudio(path)
+	default:
+		return assetType, nil, beep.Format{}, ErrInvalidFileFormat{rawType: rawType}
+	}
+
+	return assetType, streamer, format, err
+}
+
+func (al *AudioLoader) loadMp3Audio(path string) (beep.StreamSeekCloser, beep.Format, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, beep.Format{}, err
 	}
 
-	streamer, format, err := mp3.Decode(file)
+	return mp3.Decode(file)
+}
+
+func (al *AudioLoader) loadWavAudio(path string) (beep.StreamSeekCloser, beep.Format, error) {
+	file, err := os.Open(path)
 	if err != nil {
 		return nil, beep.Format{}, err
 	}
 
-	return streamer, format, nil
+	return wav.Decode(file)
 }
