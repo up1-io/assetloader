@@ -19,3 +19,12 @@ type ErrAssetAlreadyExists struct {
 func (e ErrAssetAlreadyExists) Error() string {
 	return fmt.Sprintf("asset already exists: %s", e.name)
 }
+
+// ErrUnsupportedAssetType is an error that is returned when the asset type is unsupported.
+type ErrUnsupportedAssetType struct {
+	assetType AssetType
+}
+
+func (e ErrUnsupportedAssetType) Error() string {
+	return fmt.Sprintf("unsupported asset type: %s", e.assetType)
+}
