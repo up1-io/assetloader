@@ -114,12 +114,14 @@ func (al *AudioLoader) LoadAudioStream(name, path string) (AssetResource[AudioSt
 	var format beep.Format
 
 	switch assetType {
-	case Mp3AudioStreamAssetType:
+	case Mp3AudioAssetType:
+		assetType = Mp3AudioStreamAssetType
 		streamer, format, err = al.loadMp3Audio(path)
 		if err != nil {
 			return AssetResource[AudioStreamAsset]{}, err
 		}
-	case WavAudioStreamAssetType:
+	case WavAudioAssetType:
+		assetType = WavAudioStreamAssetType
 		streamer, format, err = al.loadWavAudio(path)
 		if err != nil {
 			return AssetResource[AudioStreamAsset]{}, err

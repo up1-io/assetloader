@@ -30,7 +30,10 @@ type AssetResource[T AssetData] struct {
 
 // GetAssetTypeByPath gets the asset type by the path.
 func GetAssetTypeByPath(path string) (AssetType, error) {
-	rawType := strings.Split(path, ".")[1]
+	split := strings.Split(path, ".")
+	rawType := split[len(split)-1]
+
+	println(rawType)
 
 	var assetType AssetType
 	switch rawType {
